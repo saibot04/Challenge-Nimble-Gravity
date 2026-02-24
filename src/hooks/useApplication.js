@@ -34,5 +34,24 @@ export function useApplication() {
         initData();
     }, []);
 
-    return { jobs, candidate, loading, error };
+    const submitApplication = async (jobId, repoUrl) => {
+    try {
+        const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.APPLY}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                candidateId: API_CONFIG.CANDIDATE_EMAIL,
+                jobId: jobId,
+                repoUrl: repoUrl
+            }),
+        });
+
+        if (!response.ok) throw new Error("Error al enviar la postulación");
+        return { success: true };
+    } catch (err) {
+        return { success: false, error: err.message };
+    }
+    };
+
+    return { jobs, candidate, loading, error, submitApplication };
 }

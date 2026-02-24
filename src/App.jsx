@@ -1,33 +1,35 @@
 import { useApplication } from "./hooks/useApplication"; // Cambiado
 import JobCard from "./components/JobsList";
+import styles from "./App.module.css";
 
 function App() {
-    const { jobs, candidate, loading, error } = useApplication();
+    const { jobs, candidate, loading, error, submitApplication } = useApplication();
 
     return (
-        <div>
-            <header>
+        <div className={styles.container}>
+            <header className={styles.header}>
                 <h1>Nimble Gravity - Open Positions</h1>
                 {candidate && <p>Hola, <strong>{candidate.firstName}</strong>. Selecciona una posición:</p>}
             </header>
 
             <main>
-                {loading && <div><p>Cargando...</p></div>}
+                {loading && <div className={styles.loader}><p>Cargando...</p></div>}
                 
                 {error && !loading && (
-                    <div>
+                    <div className={styles.errorMsg}>
                         <p>⚠️ {error}</p>
-                        <button onClick={() => window.location.reload()}>Reintentar</button>
+                        <button onClick={() => window.location.reload()} className={styles.retryBtn}>Reintentar</button>
                     </div>
                 )}
 
                 {!loading && !error && (
-                    <div>
+                    <div className={styles.jobsGrid}>
                         {jobs.map((job) => (
                             <JobCard 
                                 key={job.id} 
                                 job={job} 
                                 candidate={candidate}
+                                onApply={submitApplication}
                             />
                         ))}
                     </div>
