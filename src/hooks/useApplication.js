@@ -41,6 +41,7 @@ export function useApplication() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 uuid: candidate.uuid,
+                applicationId: candidate.applicationId,
                 candidateId: candidate.candidateId,
                 jobId: jobId,
                 repoUrl: repoUrl
