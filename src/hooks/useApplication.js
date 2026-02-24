@@ -40,7 +40,8 @@ export function useApplication() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                candidateId: API_CONFIG.CANDIDATE_EMAIL,
+                uuid: candidate.uuid,
+                candidateId: candidate.candidateId,
                 jobId: jobId,
                 repoUrl: repoUrl
             }),
